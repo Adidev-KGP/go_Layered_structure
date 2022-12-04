@@ -1,35 +1,26 @@
-package db
+package config
 
-import (
-    "database/sql"
-    "fmt"
-    "log"
+import "fmt"
 
-    "os"
-
-    _ "github.com/lib/pq"
+const (
+	DBUser     = "root"
+	DBPassword = "root"
+	DBName     = "root"
+	DBHost     = "0.0.0.0"
+	DBPort     = "5432"
+	DBType     = "postgres"
 )
 
-var (
-    Client *sql.DB
+func GetDBType() string {
+	return DBType
+}
 
-    host     = os.Getenv("DB_HOST")
-    port     = os.Getenv("DB_PORT")
-    user     = os.Getenv("DB_USERNAME")
-    password = os.Getenv("DB_PASSWORD")
-    dbname   = os.Getenv("DB_NAME")
-)
-
-func init() {
-    fmt.Println("Connecting to database")
-    postgresqlDbInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-        "password=%s dbname=%s sslmode=disable",
-        host, port, user, password, dbname)
-    var err error
-    Client, err = sql.Open("postgres", postgresqlDbInfo)
-    if err != nil {
-        panic(err)
-    }
-
-    log.Println("database successfully configured")
+func GetPostgresConnectionString() string {
+	dataBase := fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable",
+		DBHost,
+		DBPort,
+		DBUser,
+		DBName,
+		DBPassword)
+	return dataBase
 }
