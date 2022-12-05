@@ -14,7 +14,7 @@ import (
     _ "github.com/lib/pq"      // postgres golang driver
 )
 
-// response format
+// response format -->  should be in package dto
 type response struct {
     ID      int64  `json:"id,omitempty"`
     Message string `json:"message,omitempty"`
@@ -60,6 +60,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
     params := mux.Vars(r)
 
     // convert the id type from string to int
+    fmt.Print(params["id"])
     id, err := strconv.Atoi(params["id"])
 
     if err != nil {
