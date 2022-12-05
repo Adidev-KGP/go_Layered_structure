@@ -51,3 +51,23 @@ func TestGetEntryByID(t *testing.T) {
 			rr.Body.String(), expected)
 	}
 }
+
+func TestGetAllEntry(t *testing.T) {
+
+	req, err := http.NewRequest("GET", "api/user/1", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	//req.URL.RawQuery += q.Encode()
+	fmt.Println(req.URL.RawQuery)
+	rr := httptest.NewRecorder()
+	handler := http.HandlerFunc(GetAllUser)
+	handler.ServeHTTP(rr, req)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+
+	// Check the response body is what we expect.
+}
+
